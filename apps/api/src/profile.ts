@@ -32,7 +32,7 @@ const hotTopHonorableRoute = async (request: Request, env: Env): Promise<Respons
 };
 
 export const routes: Routes = {
-	'/top-honorable': {
+	'/top-honorables': {
 		middlewares: [],
 		handler: hotTopHonorableRoute,
 	},
