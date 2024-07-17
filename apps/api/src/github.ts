@@ -29,31 +29,6 @@ export type FetchUserResult = {
 	updated_at: string;
 };
 
-/*
-{
-    "login": "9ssi7",
-    "avatar_url": "https://avatars.githubusercontent.com/u/76786120?v=4",
-    "gravatar_id": "",
-    "html_url": "https://github.com/9ssi7",
-    "type": "User",
-    "site_admin": false,
-    "name": "Sami Salih İbrahimbaş",
-    "company": "@monopayments",
-    "blog": "https://9ssi7.dev",
-    "location": "Istanbul, Turkiye",
-    "email": "contact@9ssi7.dev",
-    "hireable": true,
-    "bio": "product developer",
-    "twitter_username": "9ssi7",
-    "public_repos": 44,
-    "public_gists": 15,
-    "followers": 197,
-    "following": 122,
-    "created_at": "2020-12-30T16:33:31Z",
-    "updated_at": "2024-07-16T15:16:43Z"
-  }
-*/
-
 const startAuth = (clientId: string): Response => {
 	return Response.redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`, 302);
 };
@@ -97,8 +72,22 @@ const fetchUser = async (token: string): Promise<FetchUserResult | null> => {
 	return result;
 };
 
+const fetchUserByName = async (name: string): Promise<FetchUserResult | null> => {
+	const getUserResponse = await fetch(`https://api.github.com/users/${name}`, {
+		headers: {
+			accept: 'application/vnd.github.v3+json',
+		},
+	});
+	if (getUserResponse.status !== 200) {
+		return null;
+	}
+	const result: FetchUserResult = await getUserResponse.json();
+	return result;
+};
+
 export default {
 	startAuth,
 	finishAuth,
 	fetchUser,
+	fetchUserByName,
 };

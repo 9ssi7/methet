@@ -2,16 +2,19 @@ import { routes as authRoutes } from './auth';
 import { corsMiddleware } from './cors';
 import { Env } from './env';
 import { runMiddlewares } from './middleware';
+import { routes as praiseRoutes } from './praise';
+import { routes as profileRoutes } from './profile';
 import { Routes } from './types';
 
 const allRoutes: Routes = {
 	...authRoutes,
+	...praiseRoutes,
+	...profileRoutes,
 };
 
 export default {
 	async fetch(request, env): Promise<Response> {
 		const { pathname } = new URL(request.url);
-
 		const res = corsMiddleware(request);
 		if (res) return res;
 
@@ -24,14 +27,5 @@ export default {
 			if (res) return res;
 		}
 		return route.handler(request, env);
-		/*
-		if (pathname === '/api/beverages') {
-			// If you did not use `DB` as your binding name, change it here
-			const { results } = await env.DB.prepare('SELECT * FROM Customers WHERE CompanyName = ?').bind('Bs Beverages').all();
-			return Response.json(results);
-		}
-
-		return new Response('Call /api/beverages to see everyone who works at Bs Beverages');
-		*/
 	},
 } satisfies ExportedHandler<Env>;
