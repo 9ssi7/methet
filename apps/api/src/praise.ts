@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { requiredAccessMiddleware } from './auth';
 import { Env } from './env';
 import github from './github';
@@ -43,7 +43,7 @@ const createPraise = async (request: Request, env: Env): Promise<Response> => {
 	}
 
 	const praise: PraiseCreateDto = {
-		id: uuid.v4(),
+		id: uuidv4(),
 		from_user_name: fromUser!.login,
 		to_user_name: toUser.login,
 		to_user_avatar_url: toUser.avatar_url,
