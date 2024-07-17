@@ -83,13 +83,16 @@ const finishAuth = async (code: string, clientId: string, clientSecret: string):
 	});
 };
 
-const fetchUser = async (token: string): Promise<FetchUserResult> => {
+const fetchUser = async (token: string): Promise<FetchUserResult | null> => {
 	const getUserResponse = await fetch('https://api.github.com/user', {
 		headers: {
 			accept: 'application/vnd.github.v3+json',
 			authorization: `token ${token}`,
 		},
 	});
+	if (getUserResponse.status !== 200) {
+		return null;
+	}
 	const result: FetchUserResult = await getUserResponse.json();
 	return result;
 };

@@ -7,6 +7,10 @@ export const requiredAccessMiddleware: MiddlewareHandler = (request: Request): R
 	if (!token) {
 		return new Response('Unauthorized', { status: 401 });
 	}
+	const user = github.fetchUser(token);
+	if (!user) {
+		return new Response('Unauthorized', { status: 401 });
+	}
 	return null;
 };
 
