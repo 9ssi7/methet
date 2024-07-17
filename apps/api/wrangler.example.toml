@@ -5,7 +5,7 @@ compatibility_date = "2024-07-18"
 
 [[d1_databases]]
 name = "<database-name>"
-binding = "DATABASE"
+binding = "DB"
 database_id = "<database-id>"
 
 [vars]

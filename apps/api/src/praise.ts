@@ -28,7 +28,7 @@ const createPraise = async (request: Request, env: Env): Promise<Response> => {
 	}
 
 	const body: PraiseCreateDto = await request.json();
-	if (!body || !body.id || !body.from_user_name || !body.to_user_name || !body.message || !body.created_at) {
+	if (!body || !body.to_user_name || !body.message) {
 		return new Response('Bad Request', { status: 400 });
 	}
 	const token = request.headers.get('Authorization');
@@ -48,8 +48,8 @@ const createPraise = async (request: Request, env: Env): Promise<Response> => {
 		to_user_name: toUser.login,
 		to_user_avatar_url: toUser.avatar_url,
 		message: body.message,
-		created_at: body.created_at,
-		is_hidden: body.is_hidden,
+		created_at: new Date().toISOString(),
+		is_hidden: false,
 	};
 
 	const stmt = await env.DB.prepare(

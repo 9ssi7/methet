@@ -30,7 +30,14 @@ export type FetchUserResult = {
 };
 
 const startAuth = (clientId: string): Response => {
-	return Response.redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`, 302);
+	return Response.json(
+		{
+			redirect_uri: `https://github.com/login/oauth/authorize?client_id=${clientId}`,
+		},
+		{
+			status: 200,
+		}
+	);
 };
 
 const finishAuth = async (code: string, clientId: string, clientSecret: string): Promise<Response> => {
