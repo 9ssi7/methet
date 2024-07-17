@@ -1,5 +1,5 @@
 name = "<app-name>"
-main = "./worker.ts"
+main = "./src/worker.ts"
 compatibility_date = "2024-07-18"
 
 
@@ -7,3 +7,7 @@ compatibility_date = "2024-07-18"
 name = "<database-name>"
 binding = "DATABASE"
 database_id = "<database-id>"
+
+[vars]
+GITHUB_CLIENT_ID = "<github-client-id>"
+GITHUB_CLIENT_SECRET = "<github-client-secret>"

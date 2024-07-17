@@ -1,9 +1,0 @@
-name = "<app-name>"
-main = "./worker.ts"
-compatibility_date = "2024-07-18"
-
-
-[[d1_databases]]
-name = "<database-name>"
-binding = "DATABASE"
-database_id = "<database-id>"
