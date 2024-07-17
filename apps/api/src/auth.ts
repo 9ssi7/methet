@@ -1,7 +1,8 @@
 import { Env } from './env';
 import github from './github';
+import { MiddlewareHandler, Routes } from './types';
 
-export const requiredAccessMiddleware = (request: Request): Response | null => {
+export const requiredAccessMiddleware: MiddlewareHandler = (request: Request): Response | null => {
 	const token = request.headers.get('Authorization');
 	if (!token) {
 		return new Response('Unauthorized', { status: 401 });
@@ -9,7 +10,7 @@ export const requiredAccessMiddleware = (request: Request): Response | null => {
 	return null;
 };
 
-export const exlcudedAccessMiddleware = (request: Request): Response | null => {
+export const exlcudedAccessMiddleware: MiddlewareHandler = (request: Request): Response | null => {
 	const token = request.headers.get('Authorization');
 	if (token) {
 		return new Response('Forbidden', { status: 403 });
@@ -47,7 +48,13 @@ export const userRoute = async (request: Request, env: Env): Promise<Response> =
 	return new Response(JSON.stringify(user), { status: 200 });
 };
 
-export const routes = {
-	'/auth/login': loginRoute,
-	'/auth/user': userRoute,
+export const routes: Routes = {
+	'/auth/login': {
+		middlewares: [exlcudedAccessMiddleware],
+		handler: loginRoute,
+	},
+	'/auth/user': {
+		middlewares: [requiredAccessMiddleware],
+		handler: userRoute,
+	},
 };
