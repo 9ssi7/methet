@@ -8,7 +8,7 @@ type FinishAuthRes = {
   token: string;
 };
 
-type UserDetailRes = {
+export type UserDetailRes = {
   login: string;
   id: number;
   avatar_url: string;

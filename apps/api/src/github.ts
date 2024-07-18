@@ -30,14 +30,9 @@ export type FetchUserResult = {
 };
 
 const startAuth = (clientId: string): Response => {
-	return Response.json(
-		{
-			redirect_uri: `https://github.com/login/oauth/authorize?client_id=${clientId}`,
-		},
-		{
-			status: 200,
-		}
-	);
+	return new Response(JSON.stringify({ redirect_uri: `https://github.com/login/oauth/authorize?client_id=${clientId}` }), {
+		status: 200,
+	});
 };
 
 const finishAuth = async (code: string, clientId: string, clientSecret: string): Promise<Response> => {
@@ -65,11 +60,12 @@ const finishAuth = async (code: string, clientId: string, clientSecret: string):
 	});
 };
 
-const fetchUser = async (token: string): Promise<FetchUserResult | null> => {
+const fetchUser = async (token: string, useragent: string): Promise<FetchUserResult | null> => {
 	const getUserResponse = await fetch('https://api.github.com/user', {
 		headers: {
 			accept: 'application/vnd.github.v3+json',
 			authorization: `token ${token}`,
+			'user-agent': useragent,
 		},
 	});
 	if (getUserResponse.status !== 200) {
@@ -79,10 +75,11 @@ const fetchUser = async (token: string): Promise<FetchUserResult | null> => {
 	return result;
 };
 
-const fetchUserByName = async (name: string): Promise<FetchUserResult | null> => {
+const fetchUserByName = async (name: string, useragent: string): Promise<FetchUserResult | null> => {
 	const getUserResponse = await fetch(`https://api.github.com/users/${name}`, {
 		headers: {
 			accept: 'application/vnd.github.v3+json',
+			'user-agent': useragent,
 		},
 	});
 	if (getUserResponse.status !== 200) {

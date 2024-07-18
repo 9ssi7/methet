@@ -1,9 +1,14 @@
 ---
+import Header from "../components/Header.astro";
+
 interface Props {
   title: string;
+  class?: string;
 }
 
-const { title } = Astro.props;
+const token = Astro.cookies.get("token");
+
+const { title, class: className = "" } = Astro.props;
 ---
 
 <!doctype html>
@@ -16,8 +21,13 @@ const { title } = Astro.props;
     <meta name="generator" content="9ssi7" />
     <title>{title}</title>
   </head>
-  <body class="bg-first text-white">
-    <slot />
+  <body class="bg-first text-white h-full px-2 xl:px-0">
+    <Header isAuthenticated={!!token} />
+    <main
+      class={`max-w-3xl mx-auto lg:max-w-7xl h-full min-h-screen ${className}`}
+    >
+      <slot />
+    </main>
   </body>
 </html>
 <style is:global>

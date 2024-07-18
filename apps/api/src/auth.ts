@@ -7,7 +7,11 @@ export const requiredAccessMiddleware: MiddlewareHandler = (request: Request): R
 	if (!token) {
 		return new Response('Unauthorized', { status: 401 });
 	}
-	const user = github.fetchUser(token);
+	const userAgent = request.headers.get('User-Agent');
+	if (!userAgent) {
+		return new Response('Bad Request', { status: 400 });
+	}
+	const user = github.fetchUser(token, userAgent);
 	if (!user) {
 		return new Response('Unauthorized', { status: 401 });
 	}
@@ -48,7 +52,11 @@ export const userRoute = async (request: Request, env: Env): Promise<Response> =
 	if (!token) {
 		return new Response('Unauthorized', { status: 401 });
 	}
-	const user = await github.fetchUser(token);
+	const userAgent = request.headers.get('User-Agent');
+	if (!userAgent) {
+		return new Response('Bad Request', { status: 400 });
+	}
+	const user = await github.fetchUser(token, userAgent);
 	return new Response(JSON.stringify(user), { status: 200 });
 };
 

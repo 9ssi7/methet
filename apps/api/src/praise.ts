@@ -26,18 +26,18 @@ const createPraise = async (request: Request, env: Env): Promise<Response> => {
 	if (request.method !== 'POST') {
 		return new Response('Method Not Allowed', { status: 405 });
 	}
+	const userAgent = request.headers.get('User-Agent');
+	if (!userAgent) {
+		return new Response('Bad Request', { status: 400 });
+	}
 
 	const body: PraiseCreateDto = await request.json();
 	if (!body || !body.to_user_name || !body.message) {
 		return new Response('Bad Request', { status: 400 });
 	}
 	const token = request.headers.get('Authorization');
-	const fromUser = await github.fetchUser(token!);
-	if (fromUser!.login !== body.from_user_name) {
-		return new Response('Forbidden', { status: 403 });
-	}
-
-	const toUser = await github.fetchUserByName(body.to_user_name);
+	const fromUser = await github.fetchUser(token!, userAgent);
+	const toUser = await github.fetchUserByName(body.to_user_name, userAgent);
 	if (!toUser) {
 		return new Response('Not Found', { status: 404 });
 	}
@@ -53,7 +53,7 @@ const createPraise = async (request: Request, env: Env): Promise<Response> => {
 	};
 
 	const stmt = await env.DB.prepare(
-		'INSERT INTO praises (id, from_user_name, to_user_name, to_user_avatar_url, message, created_at, is_hidden) VALUES (?, ?, ?, ?, ?, ?)'
+		'INSERT INTO praises (id, from_user_name, to_user_name, to_user_avatar_url, message, created_at, is_hidden) VALUES (?, ?, ?, ?, ?, ?, ?)'
 	)
 		.bind(
 			praise.id,

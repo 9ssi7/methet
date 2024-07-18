@@ -1,6 +1,7 @@
 ---
 import { praiseList } from "../api/praise.api";
 import { getTopHonorableUsers } from "../api/profile.api";
+import WelcomeBanner from "../components/WelcomeBanner";
 import Layout from "../layouts/Layout.astro";
 
 const page = Astro.url.searchParams.get("page") || 1;
@@ -13,7 +14,8 @@ const [[praises], [topHonorables]] = await Promise.all([
 ---
 
 <Layout title="Welcome to Astro.">
-  <main>
+  <main class="">
+    <WelcomeBanner client:load client:only />
     {JSON.stringify(praises)}
 
     <h1>Top</h1>

@@ -1,3 +1,8 @@
 ---
-
+import PrasieCreateForm from "../components/PrasieCreateForm";
+import Layout from "../layouts/Layout.astro";
 ---
+
+<Layout title="Meth Et Kardeşim!" class="items-center flex justify-center">
+  <PrasieCreateForm client:load client:only />
+</Layout>
