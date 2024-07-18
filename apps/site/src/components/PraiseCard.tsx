@@ -17,7 +17,7 @@ export default function PraiseCard({
   });
 
   return (
-    <div class="w-full bg-second rounded-md gap-2 p-2 min-w-max">
+    <div class="w-full bg-second rounded-md gap-2 p-2">
       <div class="flex justify-between items-center">
         <div class="flex gap-2 items-center">
           <img
@@ -38,7 +38,7 @@ export default function PraiseCard({
           </time>
         </div>
       </div>
-      <p class="text-lg mt-4 mb-2">{message}</p>
+      <p class="text-lg mt-4 mb-2 text-wrap">{message}</p>
     </div>
   );
 }

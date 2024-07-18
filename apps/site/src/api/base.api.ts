@@ -1,4 +1,4 @@
-const ApiUrl = import.meta.env.PUBLIC_BASE_API_URL || "https://api.methet.app";
+const ApiUrl = import.meta.env.PUBLIC_BASE_API_URL || "http://localhost:8787";
 
 export type ReqResult<T> = Promise<[T | null, number]>;
 
