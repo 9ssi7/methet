@@ -1,5 +1,4 @@
 export const corsMiddleware = (request: Request): Response | null => {
-	console.log('corsMiddleware', request.method);
 	if (request.method === 'OPTIONS') {
 		return new Response(null, {
 			headers: {

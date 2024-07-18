@@ -15,7 +15,6 @@
   "dependencies": {
     "@astrojs/check": "^0.8.2",
     "@astrojs/cloudflare": "^11.0.1",
-    "@astrojs/node": "^8.3.2",
     "@astrojs/preact": "^3.5.1",
     "@astrojs/tailwind": "^5.1.0",
     "@nanostores/preact": "^0.5.1",

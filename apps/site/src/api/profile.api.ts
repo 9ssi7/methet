@@ -1,6 +1,6 @@
 import { req } from "./base.api";
 
-type TopHonorableUserDto = {
+export type TopHonorableUserDto = {
   user_name: string;
   avatar_url: string;
   praise_count: number;

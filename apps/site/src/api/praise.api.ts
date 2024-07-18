@@ -1,6 +1,6 @@
 import { req, withQuery } from "./base.api";
 
-type PraiseListDto = {
+export type PraiseListDto = {
   to_user_name: string;
   to_user_avatar_url: string;
   message: string;

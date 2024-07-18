@@ -1,89 +1,14 @@
 ---
-import { praiseList } from "../api/praise.api";
-import { getTopHonorableUsers } from "../api/profile.api";
-import PraiseCard from "../components/PraiseCard.astro";
-import ProfileCard from "../components/ProfileCard.astro";
 import WelcomeBanner from "../components/WelcomeBanner";
 import Layout from "../layouts/Layout.astro";
-
-const page = Astro.url.searchParams.has("page")
-  ? +Astro.url.searchParams.get("page")!
-  : 1;
-
-console.log(page);
-const limit = Astro.url.searchParams.has("limit")
-  ? +Astro.url.searchParams.get("limit")!
-  : 10;
-
-const [[praises], [topHonorables]] = await Promise.all([
-  praiseList(`page=${page}&per_page=${limit}`),
-  getTopHonorableUsers(),
-]);
+import LastPraiseList from "../partials/LastPraiseList";
+import TopHonorableList from "../partials/TopHonorableList";
 ---
 
 <Layout title="Methiyeler Dünyasına Hoş Geldiniz">
   <WelcomeBanner client:load client:only />
 
-  {
-    topHonorables && (
-      <>
-        <h3 class="text-xl font-bold mb-2 mt-5">En Saygıdeğerler</h3>
-        <div class="flex gap-4 overflow-y-scroll">
-          {topHonorables.map((honorable) => (
-            <ProfileCard {...honorable} />
-          ))}
-        </div>
-        {topHonorables.length === 0 && (
-          <p class="text-center text-gray-500 mt-5">
-            Henüz hiç kimse saygıdeğer değil. İlk saygıdeğer kişi sen olabilir
-            misin?
-          </p>
-        )}
-      </>
-    )
-  }
+  <TopHonorableList client:load client:only />
 
-  {
-    praises && (
-      <>
-        <h3 class="text-xl font-bold mb-2 mt-5">Son Övgüler</h3>
-        <div class="flex flex-col gap-4">
-          {praises.map((praise) => (
-            <PraiseCard {...praise} />
-          ))}
-        </div>
-        {praises.length === 0 && (
-          <p class="text-center text-gray-500 mt-5">
-            {page > 1 ? "Bu sayfada" : ""} Henüz hiç övgü yok.{" "}
-            {page === 1 && "İlk övgüyü sen yapabilir misin?"}
-          </p>
-        )}
-        <div class="grid grid-cols-3 mt-4">
-          <div>
-            {page > 1 && (
-              <a
-                href={`/?page=${page - 1}&limit=${limit}`}
-                class="text-gray-500"
-              >
-                Önceki sayfaya dön
-              </a>
-            )}
-          </div>
-          <div class="flex items-center justify-center">
-            <span class="text-gray-500 text-center">Sayfa: {page}</span>
-          </div>
-          <div class="flex items-center justify-end ">
-            {praises.length / page >= limit && (
-              <a
-                href={`/?page=${page + 1}&limit=${limit}`}
-                class="text-center text-gray-500"
-              >
-                Sonraki sayfayı göster
-              </a>
-            )}
-          </div>
-        </div>
-      </>
-    )
-  }
+  <LastPraiseList client:load client:only />
 </Layout>
