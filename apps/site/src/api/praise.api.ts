@@ -14,9 +14,12 @@ export const praiseList = async (query: string) => {
 };
 
 export const praiseListByUser = async (to_user_name: string, query: string) => {
-  return req<PraiseListDto[]>(withQuery(`praises/${to_user_name}`, query), {
-    method: "GET",
-  });
+  return req<PraiseListDto[]>(
+    withQuery(`praises/by-user`, query + `&to_user_name=${to_user_name}`),
+    {
+      method: "GET",
+    }
+  );
 };
 
 export const praiseCreate = async (

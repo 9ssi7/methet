@@ -81,7 +81,6 @@ const createPraise = async (request: Request, env: Env): Promise<Response> => {
 			{ status: 201 }
 		);
 	}
-	console.log(stmt.error);
 	return new Response('Internal Server Error', { status: 500 });
 };
 
