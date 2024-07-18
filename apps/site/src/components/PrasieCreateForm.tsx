@@ -25,7 +25,7 @@ export default function PrasieCreateForm() {
         alert("Methiniz başarıyla iletilmiştir.");
         window.location.href = "/";
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Methiniz iletilirken bir hata oluştu.");
       });
   };
