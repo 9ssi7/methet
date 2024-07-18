@@ -14,7 +14,9 @@ export default function LastPraiseByUserList() {
     const userName = window.location.pathname.split("/").pop();
     praiseListByUser(userName!, `page=${page}&per_page=${limit}`).then(
       ([data]) => {
-        setPraise(data!);
+        if (data !== null) {
+          setPraise(data!);
+        }
         setPage(parseInt(page));
         setLimit(parseInt(limit));
       }

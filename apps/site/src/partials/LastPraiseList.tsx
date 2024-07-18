@@ -12,7 +12,9 @@ export default function LastPraiseList() {
     const page = sp.has("page") ? sp.get("page")! : "1";
     const limit = sp.has("limit") ? sp.get("limit")! : "10";
     praiseList(`page=${page}&per_page=${limit}`).then(([data]) => {
-      setPraise(data!);
+      if (data !== null) {
+        setPraise(data!);
+      }
       setPage(parseInt(page));
       setLimit(parseInt(limit));
     });

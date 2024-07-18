@@ -16,7 +16,6 @@ export async function req<T = any>(
       ...options.headers,
       ...extraHeads,
     },
-    mode: "cors",
   }).catch(() => new Response(null, { status: 500 }));
   if (!response.ok) {
     try {

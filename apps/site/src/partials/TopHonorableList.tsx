@@ -10,7 +10,9 @@ export default function TopHonorableList() {
 
   useEffect(() => {
     getTopHonorableUsers().then(([data]) => {
-      setHonorables(data!);
+      if (data !== null) {
+        setHonorables(data!);
+      }
     });
   }, []);
 
