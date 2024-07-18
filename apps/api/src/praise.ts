@@ -42,6 +42,10 @@ const createPraise = async (request: Request, env: Env): Promise<Response> => {
 		return new Response('Not Found', { status: 404 });
 	}
 
+	if (fromUser?.login === toUser.login) {
+		return new Response('Bad Request', { status: 400 });
+	}
+
 	const praise: PraiseCreateDto = {
 		id: uuidv4(),
 		from_user_name: fromUser!.login,

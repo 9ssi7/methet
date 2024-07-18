@@ -21,28 +21,39 @@ const { title, class: className = "" } = Astro.props;
     <meta name="generator" content="9ssi7" />
     <title>{title}</title>
   </head>
-  <body class="bg-first text-white h-full px-2 xl:px-0">
+  <body class="bg-first text-white h-full px-2 xl:px-0 pb-40">
     <Header isAuthenticated={!!token} />
     <main
       class={`max-w-3xl mx-auto lg:max-w-7xl h-full min-h-screen ${className}`}
     >
       <slot />
     </main>
+    <footer class="text-center text-gray-500 mt-10">
+      <p>
+        © 2024 Tüm hakları saklıdır.
+        <a
+          href="https://github.com/9ssi7"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-emerald-800">9ssi7</a
+        >
+      </p>
+    </footer>
+    <style is:global>
+      html {
+        font-family: system-ui, sans-serif;
+        background-color: #090909;
+      }
+
+      body {
+        height: 100%;
+        min-height: 100vh;
+      }
+
+      body,
+      html {
+        @apply selection:bg-teal-200 selection:text-teal-600 dark:selection:bg-teal-500 dark:selection:text-teal-200 selection:bg-opacity-20 dark:selection:bg-opacity-20;
+      }
+    </style>
   </body>
 </html>
-<style is:global>
-  html {
-    font-family: system-ui, sans-serif;
-    background-color: #090909;
-  }
-
-  body {
-    height: 100%;
-    min-height: 100vh;
-  }
-
-  body,
-  html {
-    @apply selection:bg-teal-200 selection:text-teal-600 dark:selection:bg-teal-500 dark:selection:text-teal-200 selection:bg-opacity-20 dark:selection:bg-opacity-20;
-  }
-</style>
